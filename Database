@@ -1,0 +1,694 @@
+USE [master]
+GO
+/****** Object:  Database [PRJ301_assignment1]    Script Date: 10/21/2022 10:32:57 PM ******/
+CREATE DATABASE [PRJ301_assignment1]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'PRJ301_assignment1', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\PRJ301_assignment1.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'PRJ301_assignment1_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\PRJ301_assignment1_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [PRJ301_assignment1] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [PRJ301_assignment1].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET RECOVERY FULL 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET  MULTI_USER 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [PRJ301_assignment1] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'PRJ301_assignment1', N'ON'
+GO
+ALTER DATABASE [PRJ301_assignment1] SET QUERY_STORE = OFF
+GO
+USE [PRJ301_assignment1]
+GO
+/****** Object:  Table [dbo].[Attended]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Attended](
+	[aid] [int] NOT NULL,
+	[sesid] [int] NOT NULL,
+	[sid] [int] NOT NULL,
+	[present] [bit] NOT NULL,
+	[description] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Attended] PRIMARY KEY CLUSTERED 
+(
+	[aid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Group]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Group](
+	[gid] [int] NOT NULL,
+	[gname] [nvarchar](150) NOT NULL,
+	[subid] [int] NOT NULL,
+	[lid] [int] NOT NULL,
+	[sem] [nvarchar](50) NOT NULL,
+	[year] [int] NOT NULL,
+ CONSTRAINT [PK_Group] PRIMARY KEY CLUSTERED 
+(
+	[gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Lecturer]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Lecturer](
+	[lid] [int] NOT NULL,
+	[lname] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED 
+(
+	[lid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Room]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Room](
+	[rid] [int] NOT NULL,
+	[rname] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Room] PRIMARY KEY CLUSTERED 
+(
+	[rid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Session]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Session](
+	[sesid] [int] NOT NULL,
+	[gid] [int] NOT NULL,
+	[rid] [int] NOT NULL,
+	[date] [date] NOT NULL,
+	[tid] [int] NOT NULL,
+	[index] [int] NOT NULL,
+	[lid] [int] NOT NULL,
+	[attended] [bit] NOT NULL,
+ CONSTRAINT [PK_Session] PRIMARY KEY CLUSTERED 
+(
+	[sesid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student](
+	[sid] [int] NOT NULL,
+	[sname] [nvarchar](150) NOT NULL,
+	[gender] [bit] NOT NULL,
+	[dob] [date] NOT NULL,
+	[phone] [int] NOT NULL,
+	[email] [nvarchar](50) NOT NULL,
+	[address] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED 
+(
+	[sid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[StudentGroup]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[StudentGroup](
+	[sid] [int] NOT NULL,
+	[gid] [int] NOT NULL,
+ CONSTRAINT [PK_StudentGroup] PRIMARY KEY CLUSTERED 
+(
+	[sid] ASC,
+	[gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Subject]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Subject](
+	[subid] [int] NOT NULL,
+	[subname] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED 
+(
+	[subid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TimeSlot]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TimeSlot](
+	[tid] [int] NOT NULL,
+	[description] [varchar](150) NOT NULL,
+ CONSTRAINT [PK_TimeSlot] PRIMARY KEY CLUSTERED 
+(
+	[tid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (1, N'SE123', 2, 2, N'FALL', 2022)
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (2, N'SE124', 2, 2, N'FALL', 2022)
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (3, N'SE125', 2, 1, N'FALL', 2022)
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (4, N'SE126', 1, 2, N'FALL', 2022)
+GO
+INSERT [dbo].[Lecturer] ([lid], [lname]) VALUES (1, N'Nguyen Van Hai')
+INSERT [dbo].[Lecturer] ([lid], [lname]) VALUES (2, N'Ha Thi Van ')
+INSERT [dbo].[Lecturer] ([lid], [lname]) VALUES (3, N'Dang Van Cong')
+GO
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (1, N'room 1')
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (2, N'room 2')
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (3, N'room 3')
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (4, N'room 4')
+GO
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (1, 1, 1, CAST(N'2022-10-10' AS Date), 1, 1, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (2, 1, 1, CAST(N'2022-10-12' AS Date), 1, 2, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (3, 1, 1, CAST(N'2022-10-14' AS Date), 1, 3, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (4, 1, 1, CAST(N'2022-10-17' AS Date), 1, 4, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (5, 1, 1, CAST(N'2022-10-19' AS Date), 1, 5, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (6, 2, 1, CAST(N'2022-10-10' AS Date), 2, 1, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (7, 2, 1, CAST(N'2022-10-12' AS Date), 2, 2, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (8, 2, 1, CAST(N'2022-10-14' AS Date), 2, 3, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (9, 2, 1, CAST(N'2022-10-17' AS Date), 2, 4, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (10, 2, 1, CAST(N'2022-10-19' AS Date), 2, 5, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (11, 3, 2, CAST(N'2022-10-10' AS Date), 1, 1, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (12, 3, 2, CAST(N'2022-10-12' AS Date), 1, 2, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (13, 3, 2, CAST(N'2022-10-14' AS Date), 1, 3, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (14, 3, 2, CAST(N'2022-10-17' AS Date), 1, 4, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (15, 3, 2, CAST(N'2022-10-19' AS Date), 1, 5, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (16, 4, 1, CAST(N'2022-10-10' AS Date), 3, 1, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (17, 4, 1, CAST(N'2022-10-12' AS Date), 3, 2, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (18, 4, 1, CAST(N'2022-10-14' AS Date), 3, 3, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (19, 4, 1, CAST(N'2022-10-17' AS Date), 3, 4, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (20, 4, 1, CAST(N'2022-10-19' AS Date), 3, 5, 1, 0)
+GO
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (1, N'Nguyen Van Chi', 1, CAST(N'2000-01-01' AS Date), 4387483, N'chinv', N'ha noi')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (2, N'Nguyen Thi Ha', 0, CAST(N'2001-09-08' AS Date), 3872882, N'hant', N'bac giang')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (3, N'Le Trung Anh', 1, CAST(N'2002-12-24' AS Date), 4832748, N'anhlt', N'bac giang')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (4, N'Dang Duy anh', 1, CAST(N'2003-08-07' AS Date), 3874834, N'anhdd', N'phu tho')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (5, N'Tran thanh Lam ', 1, CAST(N'2002-04-05' AS Date), 3847833, N'lamtt', N'thanh hoa')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (6, N'Chu Quoc Khanh', 1, CAST(N'2002-05-04' AS Date), 3746823, N'khanhcq', N'lang son')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (7, N'Honag Anh Tu', 1, CAST(N'2002-04-05' AS Date), 3847383, N'tuha', N'yen bai')
+GO
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (1, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (1, 2)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (1, 4)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (2, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (2, 4)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (3, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (4, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (5, 2)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (6, 2)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (7, 3)
+GO
+INSERT [dbo].[Subject] ([subid], [subname]) VALUES (1, N'PRO192')
+INSERT [dbo].[Subject] ([subid], [subname]) VALUES (2, N'PRJ301')
+GO
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (1, N'7h30 to 9h')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (2, N'9h10 to 10h40')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (3, N'10h50 to 12h20')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (4, N'12h50 to 14h20')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (5, N'14h30 to 16h')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (6, N'16h10 to 17h40')
+GO
+ALTER TABLE [dbo].[Attended]  WITH CHECK ADD  CONSTRAINT [FK_Attended_Session] FOREIGN KEY([sesid])
+REFERENCES [dbo].[Session] ([sesid])
+GO
+ALTER TABLE [dbo].[Attended] CHECK CONSTRAINT [FK_Attended_Session]
+GO
+ALTER TABLE [dbo].[Attended]  WITH CHECK ADD  CONSTRAINT [FK_Attended_Student] FOREIGN KEY([sid])
+REFERENCES [dbo].[Student] ([sid])
+GO
+ALTER TABLE [dbo].[Attended] CHECK CONSTRAINT [FK_Attended_Student]
+GO
+ALTER TABLE [dbo].[Group]  WITH CHECK ADD  CONSTRAINT [FK_Group_Course] FOREIGN KEY([subid])
+REFERENCES [dbo].[Subject] ([subid])
+GO
+ALTER TABLE [dbo].[Group] CHECK CONSTRAINT [FK_Group_Course]
+GO
+ALTER TABLE [dbo].[Group]  WITH CHECK ADD  CONSTRAINT [FK_Group_Instructor] FOREIGN KEY([lid])
+REFERENCES [dbo].[Lecturer] ([lid])
+GO
+ALTER TABLE [dbo].[Group] CHECK CONSTRAINT [FK_Group_Instructor]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_Group] FOREIGN KEY([gid])
+REFERENCES [dbo].[Group] ([gid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_Group]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_Instructor] FOREIGN KEY([lid])
+REFERENCES [dbo].[Lecturer] ([lid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_Instructor]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_Room] FOREIGN KEY([rid])
+REFERENCES [dbo].[Room] ([rid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_Room]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_TimeSlot] FOREIGN KEY([tid])
+REFERENCES [dbo].[TimeSlot] ([tid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_TimeSlot]
+GO
+ALTER TABLE [dbo].[StudentGroup]  WITH CHECK ADD  CONSTRAINT [FK_StudentGroup_Group] FOREIGN KEY([gid])
+REFERENCES [dbo].[Group] ([gid])
+GO
+ALTER TABLE [dbo].[StudentGroup] CHECK CONSTRAINT [FK_StudentGroup_Group]
+GO
+ALTER TABLE [dbo].[StudentGroup]  WITH CHECK ADD  CONSTRAINT [FK_StudentGroup_Student] FOREIGN KEY([sid])
+REFERENCES [dbo].[Student] ([sid])
+GO
+ALTER TABLE [dbo].[StudentGroup] CHECK CONSTRAINT [FK_StudentGroup_Student]
+GO
+USE [master]
+GO
+ALTER DATABASE [PRJ301_assignment1] SET  READ_WRITE 
+GO
+USE [master]
+GO
+/****** Object:  Database [PRJ301_assignment1]    Script Date: 10/21/2022 10:32:57 PM ******/
+CREATE DATABASE [PRJ301_assignment1]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'PRJ301_assignment1', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\PRJ301_assignment1.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'PRJ301_assignment1_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\PRJ301_assignment1_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [PRJ301_assignment1] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [PRJ301_assignment1].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET RECOVERY FULL 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET  MULTI_USER 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [PRJ301_assignment1] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [PRJ301_assignment1] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'PRJ301_assignment1', N'ON'
+GO
+ALTER DATABASE [PRJ301_assignment1] SET QUERY_STORE = OFF
+GO
+USE [PRJ301_assignment1]
+GO
+/****** Object:  Table [dbo].[Attended]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Attended](
+	[aid] [int] NOT NULL,
+	[sesid] [int] NOT NULL,
+	[sid] [int] NOT NULL,
+	[present] [bit] NOT NULL,
+	[description] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Attended] PRIMARY KEY CLUSTERED 
+(
+	[aid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Group]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Group](
+	[gid] [int] NOT NULL,
+	[gname] [nvarchar](150) NOT NULL,
+	[subid] [int] NOT NULL,
+	[lid] [int] NOT NULL,
+	[sem] [nvarchar](50) NOT NULL,
+	[year] [int] NOT NULL,
+ CONSTRAINT [PK_Group] PRIMARY KEY CLUSTERED 
+(
+	[gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Lecturer]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Lecturer](
+	[lid] [int] NOT NULL,
+	[lname] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Instructor] PRIMARY KEY CLUSTERED 
+(
+	[lid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Room]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Room](
+	[rid] [int] NOT NULL,
+	[rname] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Room] PRIMARY KEY CLUSTERED 
+(
+	[rid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Session]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Session](
+	[sesid] [int] NOT NULL,
+	[gid] [int] NOT NULL,
+	[rid] [int] NOT NULL,
+	[date] [date] NOT NULL,
+	[tid] [int] NOT NULL,
+	[index] [int] NOT NULL,
+	[lid] [int] NOT NULL,
+	[attended] [bit] NOT NULL,
+ CONSTRAINT [PK_Session] PRIMARY KEY CLUSTERED 
+(
+	[sesid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student](
+	[sid] [int] NOT NULL,
+	[sname] [nvarchar](150) NOT NULL,
+	[gender] [bit] NOT NULL,
+	[dob] [date] NOT NULL,
+	[phone] [int] NOT NULL,
+	[email] [nvarchar](50) NOT NULL,
+	[address] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED 
+(
+	[sid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[StudentGroup]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[StudentGroup](
+	[sid] [int] NOT NULL,
+	[gid] [int] NOT NULL,
+ CONSTRAINT [PK_StudentGroup] PRIMARY KEY CLUSTERED 
+(
+	[sid] ASC,
+	[gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Subject]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Subject](
+	[subid] [int] NOT NULL,
+	[subname] [nvarchar](150) NOT NULL,
+ CONSTRAINT [PK_Course] PRIMARY KEY CLUSTERED 
+(
+	[subid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TimeSlot]    Script Date: 10/21/2022 10:32:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TimeSlot](
+	[tid] [int] NOT NULL,
+	[description] [varchar](150) NOT NULL,
+ CONSTRAINT [PK_TimeSlot] PRIMARY KEY CLUSTERED 
+(
+	[tid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (1, N'SE123', 2, 2, N'FALL', 2022)
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (2, N'SE124', 2, 2, N'FALL', 2022)
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (3, N'SE125', 2, 1, N'FALL', 2022)
+INSERT [dbo].[Group] ([gid], [gname], [subid], [lid], [sem], [year]) VALUES (4, N'SE126', 1, 2, N'FALL', 2022)
+GO
+INSERT [dbo].[Lecturer] ([lid], [lname]) VALUES (1, N'Nguyen Van Hai')
+INSERT [dbo].[Lecturer] ([lid], [lname]) VALUES (2, N'Ha Thi Van ')
+INSERT [dbo].[Lecturer] ([lid], [lname]) VALUES (3, N'Dang Van Cong')
+GO
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (1, N'room 1')
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (2, N'room 2')
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (3, N'room 3')
+INSERT [dbo].[Room] ([rid], [rname]) VALUES (4, N'room 4')
+GO
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (1, 1, 1, CAST(N'2022-10-10' AS Date), 1, 1, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (2, 1, 1, CAST(N'2022-10-12' AS Date), 1, 2, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (3, 1, 1, CAST(N'2022-10-14' AS Date), 1, 3, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (4, 1, 1, CAST(N'2022-10-17' AS Date), 1, 4, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (5, 1, 1, CAST(N'2022-10-19' AS Date), 1, 5, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (6, 2, 1, CAST(N'2022-10-10' AS Date), 2, 1, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (7, 2, 1, CAST(N'2022-10-12' AS Date), 2, 2, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (8, 2, 1, CAST(N'2022-10-14' AS Date), 2, 3, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (9, 2, 1, CAST(N'2022-10-17' AS Date), 2, 4, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (10, 2, 1, CAST(N'2022-10-19' AS Date), 2, 5, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (11, 3, 2, CAST(N'2022-10-10' AS Date), 1, 1, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (12, 3, 2, CAST(N'2022-10-12' AS Date), 1, 2, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (13, 3, 2, CAST(N'2022-10-14' AS Date), 1, 3, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (14, 3, 2, CAST(N'2022-10-17' AS Date), 1, 4, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (15, 3, 2, CAST(N'2022-10-19' AS Date), 1, 5, 2, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (16, 4, 1, CAST(N'2022-10-10' AS Date), 3, 1, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (17, 4, 1, CAST(N'2022-10-12' AS Date), 3, 2, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (18, 4, 1, CAST(N'2022-10-14' AS Date), 3, 3, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (19, 4, 1, CAST(N'2022-10-17' AS Date), 3, 4, 1, 0)
+INSERT [dbo].[Session] ([sesid], [gid], [rid], [date], [tid], [index], [lid], [attended]) VALUES (20, 4, 1, CAST(N'2022-10-19' AS Date), 3, 5, 1, 0)
+GO
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (1, N'Nguyen Van Chi', 1, CAST(N'2000-01-01' AS Date), 4387483, N'chinv', N'ha noi')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (2, N'Nguyen Thi Ha', 0, CAST(N'2001-09-08' AS Date), 3872882, N'hant', N'bac giang')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (3, N'Le Trung Anh', 1, CAST(N'2002-12-24' AS Date), 4832748, N'anhlt', N'bac giang')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (4, N'Dang Duy anh', 1, CAST(N'2003-08-07' AS Date), 3874834, N'anhdd', N'phu tho')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (5, N'Tran thanh Lam ', 1, CAST(N'2002-04-05' AS Date), 3847833, N'lamtt', N'thanh hoa')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (6, N'Chu Quoc Khanh', 1, CAST(N'2002-05-04' AS Date), 3746823, N'khanhcq', N'lang son')
+INSERT [dbo].[Student] ([sid], [sname], [gender], [dob], [phone], [email], [address]) VALUES (7, N'Honag Anh Tu', 1, CAST(N'2002-04-05' AS Date), 3847383, N'tuha', N'yen bai')
+GO
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (1, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (1, 2)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (1, 4)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (2, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (2, 4)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (3, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (4, 1)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (5, 2)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (6, 2)
+INSERT [dbo].[StudentGroup] ([sid], [gid]) VALUES (7, 3)
+GO
+INSERT [dbo].[Subject] ([subid], [subname]) VALUES (1, N'PRO192')
+INSERT [dbo].[Subject] ([subid], [subname]) VALUES (2, N'PRJ301')
+GO
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (1, N'7h30 to 9h')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (2, N'9h10 to 10h40')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (3, N'10h50 to 12h20')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (4, N'12h50 to 14h20')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (5, N'14h30 to 16h')
+INSERT [dbo].[TimeSlot] ([tid], [description]) VALUES (6, N'16h10 to 17h40')
+GO
+ALTER TABLE [dbo].[Attended]  WITH CHECK ADD  CONSTRAINT [FK_Attended_Session] FOREIGN KEY([sesid])
+REFERENCES [dbo].[Session] ([sesid])
+GO
+ALTER TABLE [dbo].[Attended] CHECK CONSTRAINT [FK_Attended_Session]
+GO
+ALTER TABLE [dbo].[Attended]  WITH CHECK ADD  CONSTRAINT [FK_Attended_Student] FOREIGN KEY([sid])
+REFERENCES [dbo].[Student] ([sid])
+GO
+ALTER TABLE [dbo].[Attended] CHECK CONSTRAINT [FK_Attended_Student]
+GO
+ALTER TABLE [dbo].[Group]  WITH CHECK ADD  CONSTRAINT [FK_Group_Course] FOREIGN KEY([subid])
+REFERENCES [dbo].[Subject] ([subid])
+GO
+ALTER TABLE [dbo].[Group] CHECK CONSTRAINT [FK_Group_Course]
+GO
+ALTER TABLE [dbo].[Group]  WITH CHECK ADD  CONSTRAINT [FK_Group_Instructor] FOREIGN KEY([lid])
+REFERENCES [dbo].[Lecturer] ([lid])
+GO
+ALTER TABLE [dbo].[Group] CHECK CONSTRAINT [FK_Group_Instructor]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_Group] FOREIGN KEY([gid])
+REFERENCES [dbo].[Group] ([gid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_Group]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_Instructor] FOREIGN KEY([lid])
+REFERENCES [dbo].[Lecturer] ([lid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_Instructor]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_Room] FOREIGN KEY([rid])
+REFERENCES [dbo].[Room] ([rid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_Room]
+GO
+ALTER TABLE [dbo].[Session]  WITH CHECK ADD  CONSTRAINT [FK_Session_TimeSlot] FOREIGN KEY([tid])
+REFERENCES [dbo].[TimeSlot] ([tid])
+GO
+ALTER TABLE [dbo].[Session] CHECK CONSTRAINT [FK_Session_TimeSlot]
+GO
+ALTER TABLE [dbo].[StudentGroup]  WITH CHECK ADD  CONSTRAINT [FK_StudentGroup_Group] FOREIGN KEY([gid])
+REFERENCES [dbo].[Group] ([gid])
+GO
+ALTER TABLE [dbo].[StudentGroup] CHECK CONSTRAINT [FK_StudentGroup_Group]
+GO
+ALTER TABLE [dbo].[StudentGroup]  WITH CHECK ADD  CONSTRAINT [FK_StudentGroup_Student] FOREIGN KEY([sid])
+REFERENCES [dbo].[Student] ([sid])
+GO
+ALTER TABLE [dbo].[StudentGroup] CHECK CONSTRAINT [FK_StudentGroup_Student]
+GO
+USE [master]
+GO
+ALTER DATABASE [PRJ301_assignment1] SET  READ_WRITE 
+GO
