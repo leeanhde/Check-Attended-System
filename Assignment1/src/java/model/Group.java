@@ -14,11 +14,19 @@ public class Group {
     private int id;
     private String name;
     private ArrayList<Student> students = new ArrayList<>();
-    private Course course;
+    private Subject subject;
     private Lecturer supervisor;
 
     public int getId() {
         return id;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public void setId(int id) {
@@ -41,13 +49,7 @@ public class Group {
         this.students = students;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
+    
 
     public Lecturer getSupervisor() {
         return supervisor;
