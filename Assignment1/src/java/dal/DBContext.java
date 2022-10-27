@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Ngo Tung Son
+ * @author anhde
  */
 public abstract class DBContext<T> {
     protected Connection connection;
